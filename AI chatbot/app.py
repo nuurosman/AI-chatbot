@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 from markdown import markdown
 
-GOOGLE_API_KEY = "AIzaSyCnH_CCVF__BlnMn3IxcpMIR5RAiSNKgA8"
+GOOGLE_API_KEY = "***INCLUDE API KEY***"
 genai.configure(api_key=GOOGLE_API_KEY)
 
 model = genai.GenerativeModel('models/gemini-1.5-flash')
