@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Construction Attendance System</title>
+  <!-- SweetAlert CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <!-- Font Awesome for hardhat icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .construction-alert {
+      background: #fff;
+      border-left: 6px solid #FF7900; /* OSHA safety orange */
+      border-radius: 4px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .construction-alert .swal2-title {
+      color: #003366; /* Dark blue */
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+    .construction-alert .swal2-icon {
+      width: 60px;
+      height: 60px;
+    }
+    .construction-alert .swal2-success {
+      border-color: #FF7900;
+    }
+    .construction-alert .swal2-success-line-tip,
+    .construction-alert .swal2-success-line-long {
+      background-color: #FF7900;
+    }
+    .construction-alert .swal2-confirm {
+      background: #003366 !important;
+      border-radius: 4px !important;
+      padding: 8px 24px;
+    }
+    .construction-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .construction-header i {
+      font-size: 2rem;
+      color: #FF7900;
+      margin-right: 12px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Demo Button (Replace with your form submit) -->
+  <button id="registerBtn" class="btn btn-primary">Register Attendance</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <script>
+    document.getElementById("registerBtn").addEventListener("click", () => {
+      Swal.fire({
+        html: `
+          <div class="construction-header">
+            <i class="fas fa-hard-hat"></i>
+            <span>ATTENDANCE RECORDED</span>
+          </div>
+          <p>Laborer <strong>John Doe</strong> marked as <strong>Present</strong><br>
+          Project: <strong>Skyline Tower</strong></p>
+        `,
+        customClass: {
+          popup: 'construction-alert'
+        },
+        showConfirmButton: true,
+        confirmButtonText: 'Continue to Dashboard',
+        timer: 5000,
+        timerProgressBar: true,
+        icon: 'success',
+        didOpen: () => {
+          // Add hardhat icon dynamically if needed
+          const icon = document.createElement('i');
+          icon.className = 'fas fa-hard-hat swal2-icon-custom';
+        }
+      }).then(() => {
+        // Redirect or perform next action
+        // window.location.href = '/dashboard';
+      });
+    });
+  </script>
+</body>
+</html>

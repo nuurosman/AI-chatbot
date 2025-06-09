@@ -28,7 +28,7 @@ $(document).ready(function () {
 
             console.log("Sending Message: ", userMessage);
 
-            $('#send-button').text('Stop');
+            $('#send-button').html('<i class="bi bi-stop-fill"></i>');
             isBotTyping = true;
 
             $('#chat-body').scrollTop($('#chat-body')[0].scrollHeight); 
@@ -55,7 +55,7 @@ $(document).ready(function () {
                         } else {
                             clearInterval(typingInterval);
                             isBotTyping = false;
-                            $('#send-button').text('Send'); 
+                            $('#send-button').html('<i class="bi bi-send-plus-fill"></i>'); 
                         }
                     }, 20); 
                 },
@@ -67,6 +67,6 @@ $(document).ready(function () {
         clearInterval(typingInterval); 
 
         isBotTyping = false;
-        $('#send-button').text('Send'); 
+        $('#send-button').html('<i class="bi bi-send-plus-fill"></i>'); 
     }
 });

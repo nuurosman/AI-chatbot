@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance System</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <style>
+    .swal2-popup {
+      background: #2d3436;
+      color: #fff;
+      border-radius: 12px;
+    }
+    .swal2-title, .swal2-content {
+      color: #fff !important;
+    }
+    .swal2-confirm {
+      background: #0984e3 !important;
+      border-radius: 8px !important;
+    }
+    .swal2-success {
+      border-color: #0984e3 !important;
+    }
+    .swal2-success-line-tip, .swal2-success-line-long {
+      background-color: #0984e3 !important;
+    }
+  </style>
+</head>
+<body>
+  <button id="registerBtn" class="btn btn-primary">Register Attendance</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.getElementById("registerBtn").addEventListener("click", () => {
+      Swal.fire({
+        title: "Done!",
+        text: "Attendance logged in dark mode.",
+        icon: "success",
+        confirmButtonText: "Got it",
+      });
+    });
+  </script>
+</body>
+</html>

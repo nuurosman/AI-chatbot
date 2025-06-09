@@ -4,13 +4,21 @@ import os
 from datetime import datetime
 from markdown import markdown
 
-GOOGLE_API_KEY = "***INCLUDE API KEY***"
-genai.configure(api_key=GOOGLE_API_KEY)
-
-model = genai.GenerativeModel('models/gemini-1.5-flash')
-chat = model.start_chat(history=[])
-
+# Initialize Flask app
 app = Flask(__name__)
+
+# Configure Gemini API - Replace with your actual API key
+GOOGLE_API_KEY = "AIzaSyAKDZABFyzc32_eTpTdb-Qvt2SXQF-bQMM"
+
+# Initialize Gemini
+try:
+    genai.configure(api_key=GOOGLE_API_KEY)
+    model = genai.GenerativeModel('models/gemini-1.5-flash')
+    chat = model.start_chat(history=[])
+    print("Gemini API initialized successfully")
+except Exception as e:
+    print(f"Failed to initialize Gemini API: {str(e)}")
+    chat = None  # Fallback for when API fails
 
 def get_season(month):
     """Determine the season based on the month."""
@@ -41,6 +49,7 @@ def chat_response():
         current_date = datetime.now()
         response = None
 
+        # Handle special queries
         if "date" in user_input_lower and ("today" in user_input_lower or "current" in user_input_lower):
             response = f"Today is {current_date.strftime('%B %d, %Y')}."
         elif "season" in user_input_lower:
@@ -49,9 +58,13 @@ def chat_response():
         elif "day" in user_input_lower and "week" in user_input_lower:
             response = f"Today is {current_date.strftime('%A')}."
         
+        # Use Gemini API for other queries
         if response is None:
+            if chat is None:
+                return jsonify({"error": "Chat service is currently unavailable"}), 503
             response = chat.send_message(user_input).text
             
+        # Format code blocks
         if "```" in response:
             response = response.replace("```", "")
             response = f"<pre><code>{response}</code></pre>"
@@ -62,7 +75,10 @@ def chat_response():
 
     except Exception as e:
         print(f"Error: {e}")
-        return jsonify({"error": str(e)}), 500
+        return jsonify({
+            "error": "Sorry, something went wrong. Please try again.",
+            "details": str(e)
+        }), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

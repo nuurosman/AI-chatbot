@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QANCIYE - Wages System</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --success-color: #27ae60;
+    }
+    
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .logo-container {
+      text-align: center;
+      margin: 2rem 0;
+    }
+    
+    .logo-img {
+      height: 80px; /* Adjust based on your logo's aspect ratio */
+      margin-bottom: 10px;
+    }
+    
+    .logo-subtext {
+      font-size: 1rem;
+      color: #7f8c8d;
+      font-weight: 400;
+      margin-top: 5px;
+    }
+    
+    .card-form {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 2rem;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      background: white;
+    }
+    
+    .form-title {
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      text-align: center;
+    }
+    
+    .btn-submit {
+      background-color: var(--secondary-color);
+      border: none;
+      padding: 10px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-submit:hover {
+      background-color: #2980b9;
+      transform: translateY(-1px);
+    }
+    
+    .notification-content {
+      display: flex;
+      align-items: center;
+      text-align: left;
+    }
+    
+    .notification-icon {
+      margin-right: 15px;
+      color: var(--success-color);
+      font-size: 1.8rem;
+    }
+    
+    .notification-text {
+      flex: 1;
+    }
+    
+    .notification-title {
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 5px;
+    }
+    
+    .notification-message {
+      color: #7f8c8d;
+      font-size: 0.9rem;
+    }
+    
+    .swal2-popup {
+      border-radius: 10px !important;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15) !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-4">
+    <div class="logo-container">
+      <!-- Replace with your actual logo file -->
+      <img src="qanciye-logo.png" alt="QANCIYE Logo" class="logo-img">
+      <div class="logo-subtext">Construction And General Service Co</div>
+    </div>
+
+    <div class="card-form">
+      <h2 class="form-title">Register Wages</h2>
+      <form id="wagesForm">
+        <div class="mb-3">
+          <label for="amount" class="form-label">Amount (USD)</label>
+          <input type="number" class="form-control" id="amount" placeholder="Enter amount" required>
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-submit">Process Payment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.getElementById("wagesForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      
+      const amount = document.getElementById("amount").value;
+      
+      // Custom notification with success message
+      Swal.fire({
+        html: `
+          <div class="notification-content">
+            <div class="notification-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="notification-text">
+              <div class="notification-title">Payment Processed</div>
+              <div class="notification-message">$${amount} wages successfully registered</div>
+            </div>
+          </div>
+        `,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        width: '380px',
+        padding: '20px',
+        background: '#fff',
+        customClass: {
+          popup: 'notification-popup',
+          timerProgressBar: 'swal2-timer-progress-bar-custom'
+        },
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      }).then(() => {
+        document.getElementById("wagesForm").reset();
+      });
+    });
+  </script>
+</body>
+</html>
