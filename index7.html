@@ -3,58 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QANCIYE - Wages System</title>
+  <title>QANCIYE - Admin Login</title>
+  <!-- SweetAlert2 for beautiful notifications -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <style>
     :root {
-      --primary-color: #2c3e50;
+      --primary-color: #213F72; /* Qanciye blue */
       --secondary-color: #3498db;
-      --success-color: #27ae60;
+      --success-color: #28a745;
     }
     
     body {
       background-color: #f8f9fa;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
     }
     
-    .logo-container {
+    .login-container {
+      max-width: 420px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    
+    .card-login {
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    
+    .card-header {
+      background-color: var(--primary-color);
+      color: white;
       text-align: center;
-      margin: 2rem 0;
+      padding: 1.5rem;
     }
     
     .logo-img {
-      height: 80px; /* Adjust based on your logo's aspect ratio */
-      margin-bottom: 10px;
+      height: 60px;
+      margin-bottom: 15px;
     }
     
-    .logo-subtext {
-      font-size: 1rem;
-      color: #7f8c8d;
-      font-weight: 400;
-      margin-top: 5px;
-    }
-    
-    .card-form {
-      max-width: 420px;
-      margin: 0 auto;
+    .card-body {
       padding: 2rem;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-      background: white;
     }
     
-    .form-title {
-      color: var(--primary-color);
-      margin-bottom: 1.5rem;
-      font-weight: 600;
-      text-align: center;
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem rgba(33, 63, 114, 0.25);
     }
     
-    .btn-submit {
-      background-color: var(--secondary-color);
+    .btn-login {
+      background-color: var(--primary-color);
       border: none;
       padding: 10px;
       font-weight: 500;
@@ -62,103 +70,167 @@
       transition: all 0.3s ease;
     }
     
-    .btn-submit:hover {
-      background-color: #2980b9;
-      transform: translateY(-1px);
+    .btn-login:hover {
+      background-color: #1a3157;
+      transform: translateY(-2px);
     }
     
-    .notification-content {
-      display: flex;
-      align-items: center;
-      text-align: left;
+    .password-toggle {
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
     
-    .notification-icon {
-      margin-right: 15px;
-      color: var(--success-color);
-      font-size: 1.8rem;
-    }
-    
-    .notification-text {
-      flex: 1;
-    }
-    
-    .notification-title {
-      font-weight: 600;
+    .password-toggle:hover {
       color: var(--primary-color);
-      margin-bottom: 5px;
     }
     
-    .notification-message {
-      color: #7f8c8d;
-      font-size: 0.9rem;
-    }
-    
+    /* Custom notification styles */
     .swal2-popup {
-      border-radius: 10px !important;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.15) !important;
+      border-radius: 8px !important;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    }
+    
+    .swal2-success {
+      color: var(--success-color) !important;
+      border-color: var(--success-color) !important;
+    }
+    
+    .swal2-title {
+      font-size: 1.25rem !important;
+      color: var(--primary-color) !important;
     }
   </style>
 </head>
 <body>
-  <div class="container py-4">
-    <div class="logo-container">
-      <!-- Replace with your actual logo file -->
-      <img src="qanciye-logo.png" alt="QANCIYE Logo" class="logo-img">
-      <div class="logo-subtext">Construction And General Service Co</div>
-    </div>
-
-    <div class="card-form">
-      <h2 class="form-title">Register Wages</h2>
-      <form id="wagesForm">
-        <div class="mb-3">
-          <label for="amount" class="form-label">Amount (USD)</label>
-          <input type="number" class="form-control" id="amount" placeholder="Enter amount" required>
+  <div class="container">
+    <div class="login-container">
+      <div class="card card-login">
+        <div class="card-header">
+          <img src="qanciye-logo.png" alt="QANCIYE Logo" class="logo-img">
+          <h4>Admin Portal</h4>
         </div>
-        <div class="d-grid">
-          <button type="submit" class="btn btn-primary btn-submit">Process Payment</button>
+        <div class="card-body">
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                <span class="input-group-text password-toggle" id="togglePassword">
+                  <i class="bi bi-eye-fill" id="eyeIcon"></i>
+                </span>
+              </div>
+            </div>
+            
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary btn-login" id="loginBtn">
+                <span id="loginText">Login</span>
+                <span id="loginSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 
+  <!-- JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
   <script>
-    document.getElementById("wagesForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+    document.addEventListener('DOMContentLoaded', function() {
+      // Password toggle functionality
+      const togglePassword = document.getElementById('togglePassword');
+      const password = document.getElementById('password');
+      const eyeIcon = document.getElementById('eyeIcon');
       
-      const amount = document.getElementById("amount").value;
+      togglePassword.addEventListener('click', function() {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        eyeIcon.classList.toggle('bi-eye-fill');
+        eyeIcon.classList.toggle('bi-eye-slash-fill');
+      });
       
-      // Custom notification with success message
-      Swal.fire({
-        html: `
-          <div class="notification-content">
-            <div class="notification-icon">
-              <i class="fas fa-check-circle"></i>
-            </div>
-            <div class="notification-text">
-              <div class="notification-title">Payment Processed</div>
-              <div class="notification-message">$${amount} wages successfully registered</div>
-            </div>
-          </div>
-        `,
-        position: 'top',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        width: '380px',
-        padding: '20px',
-        background: '#fff',
-        customClass: {
-          popup: 'notification-popup',
-          timerProgressBar: 'swal2-timer-progress-bar-custom'
-        },
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
+      // Login form submission
+      const loginForm = document.getElementById('loginForm');
+      const loginBtn = document.getElementById('loginBtn');
+      const loginText = document.getElementById('loginText');
+      const loginSpinner = document.getElementById('loginSpinner');
+      
+      loginForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Get form values
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        // Show loading state
+        loginText.textContent = 'Authenticating...';
+        loginSpinner.classList.remove('d-none');
+        loginBtn.disabled = true;
+        
+        // Simulate API call (replace with actual fetch to your backend)
+        try {
+          // This would be your actual fetch call in production:
+          // const response = await fetch('/api/login', {
+          //   method: 'POST',
+          //   headers: { 'Content-Type': 'application/json' },
+          //   body: JSON.stringify({ email, password })
+          // });
+          // const data = await response.json();
+          
+          // For demo purposes, we'll simulate a successful login
+          // Remove this setTimeout in your actual implementation
+          setTimeout(async () => {
+            // Show success notification
+            await Swal.fire({
+              title: 'Login Successful',
+              text: `Welcome back, ${email.split('@')[0]}!`,
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              position: 'top-end',
+              toast: true,
+              background: 'white',
+              showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+              },
+              hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+              }
+            });
+            
+            // Redirect to dashboard after toast disappears
+            window.location.href = '/dashboard.html'; // Change to your actual dashboard URL
+            
+          }, 1500);
+          
+        } catch (error) {
+          console.error('Login error:', error);
+          
+          // Show error notification
+          Swal.fire({
+            title: 'Login Failed',
+            text: 'Invalid credentials or network error',
+            icon: 'error',
+            confirmButtonColor: 'var(--primary-color)'
+          });
+          
+          // Reset button state
+          loginText.textContent = 'Login';
+          loginSpinner.classList.add('d-none');
+          loginBtn.disabled = false;
         }
-      }).then(() => {
-        document.getElementById("wagesForm").reset();
       });
     });
   </script>
